@@ -1,0 +1,29 @@
+{
+  "characters": [
+    {
+      "id": 1,
+      "name": "Zilong",
+      "imageUrl": "https://esportsnesia.com/wp-content/uploads/2020/10/zilong.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Nana",
+      "imageUrl": "https://www.ligagame.tv/images/Nana-Hero-Mobile-Legends_4f22c.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Kagura",
+      "imageUrl": "https://assets.skor.id/crop/0x0:0x0/750x500/photo/2021/10/16/4031111871.jpeg"
+    },
+    {
+      "id": 4,
+      "name": "Moskov",
+      "imageUrl": "https://assets.skor.id/crop/0x0:0x0/x/photo/2022/04/19/1592433646.jpg"
+    },
+    {
+      "name": "Johnson",
+      "imageUrl": "http://asset-a.grid.id/crop/384x0:1920x959/x/photo/2019/06/10/3578097997.jpg",
+      "id": 5
+    }
+  ]
+}
