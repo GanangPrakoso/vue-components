@@ -52,7 +52,7 @@
               v-model="addImageUrl"
             />
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Add Character</button>
         </form>
       </div>
 
@@ -96,7 +96,6 @@
                 method: "get",
               });
 
-              console.log(data);
               this.characterList = data;
             } catch (err) {
               console.log(err);
