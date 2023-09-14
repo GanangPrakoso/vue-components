@@ -4,21 +4,44 @@ import axios from "axios";
 import Navbar from "./components/Navbar.vue";
 import CharacterCard from "./components/CharacterCard.vue";
 import AddCharacterForm from "./components/AddCharacterForm.vue";
+import Home from "./components/HomePage.vue";
 
 export default {
   components: {
     Navbar,
     CharacterCard,
     AddCharacterForm,
+    Home,
   },
   data() {
     return {
       baseUrl: "http://localhost:3000",
       username: "Dadang Konelo",
       characterList: [],
+      page: "home",
+      detailData: {},
     };
   },
   methods: {
+    changePage(page) {
+      this.page = page;
+    },
+
+    async getCharById(id) {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + "/characters/" + id,
+          method: "get",
+        });
+
+        this.detailData = data;
+
+        this.changePage("edit");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async fetchCharacters() {
       try {
         const { data } = await axios({
@@ -26,6 +49,7 @@ export default {
           url: this.baseUrl + "/characters",
         });
 
+        console.log(data, "<<<<<");
         this.characterList = data;
       } catch (err) {
         console.log(err);
@@ -43,15 +67,29 @@ export default {
             imageUrl: value.imageUrl,
           },
         });
-        this.fetchCharacters();
+
+        // this.changePage("home");
+        cb();
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async deleteChar(id) {
+      try {
+        await axios({
+          url: this.baseUrl + "/characters/" + id,
+          method: "delete",
+        });
+        this.fetchCharacters();
+      } catch (error) {
+        console.log(error);
       }
     },
   },
 
   created() {
-    this.fetchCharacters();
+    // this.fetchCharacters();
   },
 };
 </script>
@@ -61,20 +99,29 @@ export default {
   <!-- component = tag html yang baru -->
 
   <!-- NAVBAR -->
-  <Navbar :username="username" />
+  <Navbar :username="username" @changePage="changePage" />
 
   <!-- ADD CHARACTER -->
-  <AddCharacterForm @addCharacter="addCharacter" />
+  <AddCharacterForm
+    v-if="page === 'add'"
+    @addCharacter="addCharacter"
+    :page="page"
+  />
+
+  <AddCharacterForm
+    v-if="page === 'edit'"
+    :detailData="detailData"
+    :page="page"
+  />
+
   <!-- CHARACTERS LIST -->
-  <div class="container mt-5 d-flex flex-wrap">
-    <!-- card -->
-    <CharacterCard
-      v-for="character in characterList"
-      :key="character.id"
-      :character="character"
-    />
-    <!-- card -->
-  </div>
+  <Home
+    v-if="page === 'home'"
+    :characterList="characterList"
+    @fetchCharacters="fetchCharacters"
+    @deleteChar="deleteChar"
+    @getCharById="getCharById"
+  />
 </template>
 
 <!-- menuliskan CSS / styling -->
